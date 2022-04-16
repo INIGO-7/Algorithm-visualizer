@@ -1,9 +1,12 @@
 package main;
 
 public class Launcher {
-
+	
+	private static Main main;
+	
 	public static void main(String[] args) {
-		System.out.println("Hello World!!");
+		main = new Main("Algorithm-Visualizer", 400, 300);
+		
 	}
 	
 }
