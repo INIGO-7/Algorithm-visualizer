@@ -1,11 +1,6 @@
 package main;
 
 import java.awt.Canvas;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 
@@ -14,8 +9,7 @@ public class Window {
 	private JFrame frame;
 	private Canvas canvas;
 	
-	public Window(String title, int width, int height) {
-		
+	public Window(int width, int height, String title) {
 		frame = new JFrame(title);
 		frame.setSize(width, height);
 		frame.setLocationRelativeTo(null);
@@ -38,7 +32,7 @@ public class Window {
 
 	public JFrame getJFrame() {
 		return frame;
+	
 	}
-
 	
 }
