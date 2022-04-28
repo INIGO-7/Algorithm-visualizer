@@ -12,7 +12,10 @@ public class Main implements Runnable{
 	float rate, updateDiff;
 	boolean running;
 	Thread t;
-	
+
+	//mouse data
+	private MouseManager mouseManager;
+
 	public Main(int width, int height, String title) {
 		
 		this.width = width;
@@ -21,7 +24,9 @@ public class Main implements Runnable{
 		
 		window = new Window(width, height, title);
 		
-		
+		mouseManager = new MouseManager();
+
+		window.getCanvas().addMouseListener(mouseManager);
 	}
 
 	@Override
@@ -50,7 +55,13 @@ public class Main implements Runnable{
 	}
 	
 	public void tick() {
-		System.out.println("this just works.");
+
+		if(mouseManager.getLeftClick()){
+			System.out.println("left click");
+		}
+		if(mouseManager.getRightClick()){
+			System.out.println("right click");
+		}
 	}
 	
 	public synchronized void start() {
