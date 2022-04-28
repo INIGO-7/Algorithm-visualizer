@@ -1,5 +1,8 @@
 package main;
 
+import java.awt.*;
+import java.awt.image.BufferStrategy;
+
 public class Main implements Runnable{
 	
 	//Window data
@@ -15,6 +18,10 @@ public class Main implements Runnable{
 
 	//mouse data
 	private MouseManager mouseManager;
+
+	//attributes for rendering
+	private Graphics g;
+	private BufferStrategy bs;
 
 	public Main(int width, int height, String title) {
 		
@@ -51,7 +58,29 @@ public class Main implements Runnable{
 	}
 	
 	public void render() {
-		
+
+		//we create a buffer strategy for the canvas
+		bs = window.getCanvas().getBufferStrategy();
+		if(bs == null) {
+			window.getCanvas().createBufferStrategy(3);
+			return;
+		}
+
+		//then we initialise the graphics variable with the new buffers
+		g = bs.getDrawGraphics();
+
+		//everything drawn before is erased
+		g.clearRect(0, 0, width, height);
+
+		//here we can start drawing:
+
+		g.setColor(Color.RED);
+		g.fillRect(50, 50, 100, 100);
+
+		//here we end drawing
+		bs.show();
+		g.dispose();
+
 	}
 	
 	public void tick() {
