@@ -1,5 +1,9 @@
 package main;
 
+import main.states.ProgramState;
+import main.states.MenuState;
+import main.states.State;
+
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
@@ -23,6 +27,10 @@ public class Main implements Runnable{
 	private Graphics g;
 	private BufferStrategy bs;
 
+	//states
+	private MenuState menuState;
+	private ProgramState programState;
+
 	public Main(int width, int height, String title) {
 		
 		this.width = width;
@@ -34,6 +42,9 @@ public class Main implements Runnable{
 		mouseManager = new MouseManager();
 
 		window.getCanvas().addMouseListener(mouseManager);
+
+		programState = new ProgramState();
+		State.setState(programState);
 	}
 
 	@Override
@@ -74,8 +85,9 @@ public class Main implements Runnable{
 
 		//here we can start drawing:
 
-		g.setColor(Color.RED);
-		g.fillRect(50, 50, 100, 100);
+		State.getState().render(g);
+
+		if(State.getState() instanceof ProgramState)  { ProgramState gs = (ProgramState) State.getState(); }
 
 		//here we end drawing
 		bs.show();
@@ -84,13 +96,7 @@ public class Main implements Runnable{
 	}
 	
 	public void tick() {
-
-		if(mouseManager.getLeftClick()){
-			System.out.println("left click");
-		}
-		if(mouseManager.getRightClick()){
-			System.out.println("right click");
-		}
+		State.getState().tick();
 	}
 	
 	public synchronized void start() {
