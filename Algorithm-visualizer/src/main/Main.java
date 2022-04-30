@@ -8,12 +8,12 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 
 public class Main implements Runnable{
-	
+
 	//Window data
 	private Window window;
 	private int width, height;
 	private String title;
-	
+
 	//Loop and threading data
 	long past, current;
 	float rate, updateDiff;
@@ -32,18 +32,18 @@ public class Main implements Runnable{
 	private ProgramState programState;
 
 	public Main(int width, int height, String title) {
-		
+
 		this.width = width;
 		this.height = height;
 		this.title = title;
-		
+
 		window = new Window(width, height, title);
-		
+
 		mouseManager = new MouseManager();
 
 		window.getCanvas().addMouseListener(mouseManager);
 
-		programState = new ProgramState();
+		programState = new ProgramState(this);
 		State.setState(programState);
 	}
 
@@ -51,23 +51,23 @@ public class Main implements Runnable{
 	public void run() {
 		past = System.nanoTime();
 		rate = 1000000000/60;						//rate at which we want to update stuff, which is 1/60 of a second
-													//this is 60 frames per second, such as most videogames nowadays.
+		//this is 60 frames per second, such as most videogames nowadays.
 		while(running) {
 
 			current = System.nanoTime();
 			updateDiff += (current-past)/rate;
-			
+
 			if(updateDiff >= 1) {				//if more than a 1/60 of a sec. has passed, then do the following...
 				render();
 				tick();
 				updateDiff = 0;
 			}
 			past = current;
-			
+
 		}
 		stop();
 	}
-	
+
 	public void render() {
 
 		//we create a buffer strategy for the canvas
@@ -84,38 +84,41 @@ public class Main implements Runnable{
 		g.clearRect(0, 0, width, height);
 
 		//here we can start drawing:
-
+		g.setColor(new Color(29, 52 , 89));
+		g.fillRect(0, 0, window.getCanvas().getWidth(), window.getCanvas().getHeight());
 		State.getState().render(g);
-
-		if(State.getState() instanceof ProgramState)  { ProgramState gs = (ProgramState) State.getState(); }
 
 		//here we end drawing
 		bs.show();
 		g.dispose();
 
 	}
-	
+
 	public void tick() {
 		State.getState().tick();
 	}
-	
+
+	public Window getWindow(){
+		return window;
+	}
+
 	public synchronized void start() {
-		
+
 		if(!running) running = true;
 		else return;
-		
+
 		t = new Thread(this);
 		t.start();
 	}
-	
+
 	public synchronized void stop() {
-		
+
 		if(running) running = false;
 		else return;
-		
-		try {t.join();} 
+
+		try {t.join();}
 		catch (InterruptedException e) {e.printStackTrace();}
-		
+
 	}
-	
+
 }
