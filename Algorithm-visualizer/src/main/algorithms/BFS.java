@@ -38,12 +38,9 @@ public class BFS {
             Node[] neighbours = curNode.getUnvisitedNeighbours();
             for (int i = 0; i < neighbours.length; ++i)
             {
-                if(!(neighbours[i].isVisited() && neighbours[i].isWall())) {
-
-                    neighbours[i].setToVisited();
-                    neighbours[i].setParent(curNode);
-                    queue.add(neighbours[i]);
-                }
+                neighbours[i].setToVisited();
+                neighbours[i].setParent(curNode);
+                queue.add(neighbours[i]);
             }
         }
         // Done ! At this point we just have to walk back from the end using the parent

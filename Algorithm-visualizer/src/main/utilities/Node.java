@@ -41,11 +41,15 @@ public class Node {
     }
 
     public Node[] getUnvisitedNeighbours(){
-        //handle wall nodes
 
-        Node[] neighbours = new Node[3];       //example
 
-        return neighbours;
+        /*
+        if(!(neighbours[i].isVisited() && neighbours[i].isWall())){
+
+        }
+
+        return neighbours;*/
+        return new Node[3];
     }
 
     public void setParent(Node n){
