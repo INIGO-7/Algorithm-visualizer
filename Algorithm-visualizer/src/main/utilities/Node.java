@@ -40,10 +40,10 @@ public class Node {
         this.color = new Color(80, 80, 80);     //default color.
     }
 
-    public LinkedList<Node> getUnvisitedNeighbours(){
+    public Node[] getUnvisitedNeighbours(){
         //handle wall nodes
 
-        LinkedList<Node> neighbours = new LinkedList<>();
+        Node[] neighbours = new Node[3];       //example
 
         return neighbours;
     }
@@ -65,8 +65,16 @@ public class Node {
         this.isWall = true;
     }
 
-    public void unsetWall(){
+    public void unsetAsWall(){
         this.isWall = false;
+    }
+
+    public void setToVisited(){
+        this.visited = true;
+    }
+
+    public void setToUnvisited(){
+        this.visited = false;
     }
 
     public int getRow(){
@@ -79,6 +87,10 @@ public class Node {
 
     public boolean isWall(){
         return isWall;
+    }
+
+    public boolean isVisited(){
+        return visited;
     }
 
 }

@@ -2,6 +2,7 @@ package main.states;
 
 import main.Main;
 import main.Window;
+import main.algorithms.BFS;
 import main.utilities.Node;
 
 import java.awt.*;
@@ -51,6 +52,7 @@ public class ProgramState extends State{
                 n.setColor(Color.BLACK);
             }
         }
+
     }
 
     public void tick(){}
