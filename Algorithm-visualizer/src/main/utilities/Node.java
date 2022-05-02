@@ -48,26 +48,17 @@ public class Node {
         LinkedList<Node> neighbours = new LinkedList<>();
         ArrayList<Node> accessibleNeighbours = new ArrayList<>();
 
-        neighbours.add(maze.getNode(row + 1, column));
-        neighbours.add(maze.getNode(row - 1, column));
-        neighbours.add(maze.getNode(row, column + 1));
-        neighbours.add(maze.getNode(row, column - 1));
+        neighbours.add(maze.getNode(row + 1, column));      //to the right
+        neighbours.add(maze.getNode(row - 1, column));      //to the left
+        neighbours.add(maze.getNode(row, column + 1));       //downwards
+        neighbours.add(maze.getNode(row, column - 1));       //upwards
 
         for( Node n : neighbours ){
             if(n == null || n.isVisited() || n.isWall) continue;
-            //System.out.println(n.getCol() + " " + n.getRow());
             accessibleNeighbours.add(n);
         }
 
-        for(Node n : accessibleNeighbours){
-            System.out.println(n.row + " " + n.column);
-        }
-
         return accessibleNeighbours;
-    }
-
-    public void setParent(Node n){
-        this.previous = n;
     }
 
     public void paint(Graphics g){
@@ -80,6 +71,7 @@ public class Node {
     }
 
     public void setAsWall(){
+        color = Color.BLACK;
         this.isWall = true;
     }
 
@@ -94,6 +86,9 @@ public class Node {
     public void setToUnvisited(){
         this.visited = false;
     }
+    public void setPrevious(Node n){
+        this.previous = n;
+    }
 
     public int getRow(){
         return row;
@@ -101,6 +96,10 @@ public class Node {
 
     public int getCol(){
         return column;
+    }
+
+    public Node getPrevious(){
+        return previous;
     }
 
     public boolean isWall(){

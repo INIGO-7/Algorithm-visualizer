@@ -18,8 +18,16 @@ public class BFS {
     //This may be the algorithm of choice to identify nearby places of interest in GPS.
     //BFS guarantees the shortest path.
 
+    private Node origin, destiny;
+    private ArrayList<Node> exploredNodes = new ArrayList<Node>();
+    private Queue queue = new LinkedList<Node>();
+
     public BFS(Maze maze, Node start, Node end)
     {
+
+        this.origin = start;
+        this.destiny = end;
+
         //initialise the Queue
         Queue queue = new LinkedList<Node>();
         // Put the start node in the queue
@@ -29,8 +37,8 @@ public class BFS {
         while (!queue.isEmpty())
         {
             // Handle the node in the front of the line
-            Node curNode = (Node) queue.poll();             //returns null if queue is empty
-            if(!(curNode == start || curNode == end)) curNode.setColor(new Color(138, 240, 137));
+            Node curNode = (Node) queue.poll();
+
             // Terminate if the goal is reached
             if (curNode == end) break;
 
@@ -41,12 +49,36 @@ public class BFS {
                 if(neighbours.get(i) == null) continue;
 
                 neighbours.get(i).setToVisited();
-                neighbours.get(i).setParent(curNode);
+                neighbours.get(i).setPrevious(curNode);
                 queue.add(neighbours.get(i));
             }
         }
         // Done ! At this point we just have to walk back from the end using the parent
         // If end does not have a parent, it means that it has not been found.
+    }
+
+    public void visualizeSearch(){
+
+
+    }
+
+    public void visualizeShortestPath(){
+
+        Node n = destiny.getPrevious();
+
+        while(n.getPrevious() != null){
+            n.setColor(Color.yellow);
+            n = n.getPrevious();
+        }
+
+    }
+
+    public Node getOrigin(){
+        return origin;
+    }
+
+    public Node getDestiny(){
+        return destiny;
     }
 
 }

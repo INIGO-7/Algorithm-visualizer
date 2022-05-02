@@ -18,7 +18,7 @@ public class Main implements Runnable{
 	long past, current;
 	float rate, updateDiff;
 	boolean running;
-	Thread t;
+	Thread thread;
 
 	//mouse data
 	private MouseManager mouseManager;
@@ -102,13 +102,15 @@ public class Main implements Runnable{
 		return window;
 	}
 
+	public Thread getThread(){ return thread; }
+
 	public synchronized void start() {
 
 		if(!running) running = true;
 		else return;
 
-		t = new Thread(this);
-		t.start();
+		thread = new Thread(this);
+		thread.start();
 	}
 
 	public synchronized void stop() {
@@ -116,7 +118,7 @@ public class Main implements Runnable{
 		if(running) running = false;
 		else return;
 
-		try {t.join();}
+		try {thread.join();}
 		catch (InterruptedException e) {e.printStackTrace();}
 
 	}

@@ -7,16 +7,21 @@ import main.utilities.Maze;
 import main.utilities.Node;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class ProgramState extends State{
 
     private Window window;
+    private Main main;
     private int gridWidth, gridHeight, gridStartX, gridStartY;
     private int rowNumber, colNumber;
     private Maze maze;
 
-    public ProgramState(Main main){
+    public ProgramState(Main main) {
 
+        this.main = main;
         this.window = main.getWindow();
 
         gridWidth = 800;
@@ -29,6 +34,10 @@ public class ProgramState extends State{
 
         maze = new Maze(rowNumber, colNumber, gridStartX, gridStartY);
 
+        for(int i = 1; i <= 6; i++){
+            maze.getNode(i, 27).setAsWall();
+        }
+
         //origin and destiny points
 
         Node origin = maze.getNode(4, 4);
@@ -38,6 +47,8 @@ public class ProgramState extends State{
         destination.setColor(new Color(12, 12, 110));
 
         BFS bfs = new BFS(maze, origin, destination);
+
+        bfs.visualizeShortestPath();
 
     }
 
