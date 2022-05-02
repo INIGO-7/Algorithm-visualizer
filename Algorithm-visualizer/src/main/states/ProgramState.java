@@ -2,6 +2,7 @@ package main.states;
 
 import main.Main;
 import main.Window;
+import main.algorithms.BFS;
 import main.utilities.Maze;
 import main.utilities.Node;
 
@@ -27,6 +28,16 @@ public class ProgramState extends State{
         gridStartY = window.getCanvas().getHeight()/2 - gridHeight/2;
 
         maze = new Maze(rowNumber, colNumber, gridStartX, gridStartY);
+
+        //origin and destiny points
+
+        Node origin = maze.getNode(4, 4);
+        Node destination = maze.getNode(4, 30);
+
+        origin.setColor(new Color(156, 0, 0));
+        destination.setColor(new Color(12, 12, 110));
+
+        BFS bfs = new BFS(maze, origin, destination);
 
     }
 
@@ -61,13 +72,6 @@ public class ProgramState extends State{
         for(int y = gridStartY; y <= gridStartY + gridHeight; y+=25){
             g.drawLine(gridStartX, y, gridStartX + gridWidth, y);
         }
-
-        //origin and destiny points
-
-        g.setColor(new Color(156, 0, 0));
-        g.fillRect(gridStartX + 101, gridStartY + 101, 24, 24);
-        g.setColor(new Color(12, 12, 110));
-        g.fillRect(gridStartX + 701, gridStartY + 501, 24, 24);
 
     }
 

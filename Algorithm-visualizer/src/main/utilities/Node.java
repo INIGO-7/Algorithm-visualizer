@@ -1,6 +1,7 @@
 package main.utilities;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Node {
@@ -40,16 +41,29 @@ public class Node {
         this.color = new Color(80, 80, 80);     //default color.
     }
 
-    public Node[] getUnvisitedNeighbours(){
+    public ArrayList<Node> getUnvisitedNeighbours(Maze maze){
 
+        //a node can have neighbours in 4 directions:
 
-        /*
-        if(!(neighbours[i].isVisited() && neighbours[i].isWall())){
+        LinkedList<Node> neighbours = new LinkedList<>();
+        ArrayList<Node> accessibleNeighbours = new ArrayList<>();
 
+        neighbours.add(maze.getNode(row + 1, column));
+        neighbours.add(maze.getNode(row - 1, column));
+        neighbours.add(maze.getNode(row, column + 1));
+        neighbours.add(maze.getNode(row, column - 1));
+
+        for( Node n : neighbours ){
+            if(n == null || n.isVisited() || n.isWall) continue;
+            //System.out.println(n.getCol() + " " + n.getRow());
+            accessibleNeighbours.add(n);
         }
 
-        return neighbours;*/
-        return new Node[3];
+        for(Node n : accessibleNeighbours){
+            System.out.println(n.row + " " + n.column);
+        }
+
+        return accessibleNeighbours;
     }
 
     public void setParent(Node n){

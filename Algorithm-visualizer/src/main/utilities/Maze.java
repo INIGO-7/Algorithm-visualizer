@@ -5,13 +5,15 @@ import java.util.LinkedList;
 
 public class Maze {
 
-    int x, y;
+    int x, y, rows, cols;
     private LinkedList<Node> nodes = new LinkedList<>();
 
     public Maze(int rows, int cols, int startX, int startY){
 
         this.x = startX;
         this.y = startY;
+        this.rows = rows;
+        this.cols = cols;
 
         //initialise the grid nodes
 
@@ -33,6 +35,7 @@ public class Maze {
             if(n.getRow() == 1 || n.getRow() == rows ||
                     n.getCol() == 1 || n.getCol() == cols){
                 n.setColor(Color.BLACK);
+                n.setAsWall();
             }
         }
 
@@ -42,6 +45,11 @@ public class Maze {
         return nodes;
     }
 
-    
+    public Node getNode(int row, int col){
+        for( Node n : nodes ){
+            if( n.getRow() == row && n.getCol() == col ) return n;
+        }
+        return null;
+    }
 
 }
