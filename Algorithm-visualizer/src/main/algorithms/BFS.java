@@ -64,11 +64,26 @@ public class BFS {
 
     public void visualizeShortestPath(){
 
+        Queue path = new LinkedList<Node>();
         Node n = destiny.getPrevious();
 
+
         while(n.getPrevious() != null){
-            n.setColor(Color.yellow);
+            path.add(n);
             n = n.getPrevious();
+        }
+
+        long past = System.currentTimeMillis();
+        double diff = 75;                     //this will be updated 13.3 times per second
+        long current;
+
+        while(!path.isEmpty()){
+            current = System.currentTimeMillis();
+
+            if((current - past) / diff >= 1){
+                ((Node) path.poll()).setColor(Color.yellow);
+                past = current;
+            }
         }
 
     }

@@ -47,8 +47,7 @@ public class ProgramState extends State{
         destination.setColor(new Color(12, 12, 110));
 
         BFS bfs = new BFS(maze, origin, destination);
-
-        bfs.visualizeShortestPath();
+        visualizeSortestPath(bfs);
 
     }
 
@@ -83,6 +82,25 @@ public class ProgramState extends State{
         for(int y = gridStartY; y <= gridStartY + gridHeight; y+=25){
             g.drawLine(gridStartX, y, gridStartX + gridWidth, y);
         }
+
+    }
+
+    public void visualizeSearch(BFS bfs){
+
+    }
+
+    public void visualizeSortestPath(BFS bfs){
+
+        Thread t = new Thread( new Runnable(){
+
+            public void run(){
+                bfs.visualizeShortestPath();
+            }
+
+        }
+        );
+
+        t.start();
 
     }
 
