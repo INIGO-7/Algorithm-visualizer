@@ -40,14 +40,14 @@ public class ProgramState extends State{
 
         //origin and destiny points
 
-        Node origin = maze.getNode(4, 4);
+        Node origin = maze.getNode(2, 25);
         Node destination = maze.getNode(4, 30);
 
-        origin.setColor(new Color(156, 0, 0));
-        destination.setColor(new Color(12, 12, 110));
+        origin.setColor(new Color(9, 110, 19));
+        destination.setColor(new Color(6, 12, 128));
 
         BFS bfs = new BFS(maze, origin, destination);
-        visualizeSortestPath(bfs);
+        visualizeAlgorithm(bfs);
 
     }
 
@@ -69,7 +69,7 @@ public class ProgramState extends State{
 
         // We draw the grid on top:
 
-        g.setColor(new Color(150, 150, 150));
+        g.setColor(new Color(160, 160, 160));
 
         // X axis
 
@@ -85,7 +85,33 @@ public class ProgramState extends State{
 
     }
 
+    public void visualizeAlgorithm(BFS bfs){
+
+        Thread t = new Thread( new Runnable(){
+
+            public void run(){
+                bfs.visualizeAlgorithm();
+            }
+
+        }
+        );
+
+        t.start();
+
+    }
+
     public void visualizeSearch(BFS bfs){
+
+        Thread t = new Thread( new Runnable(){
+
+            public void run(){
+                bfs.visualizeSearch();
+            }
+
+        }
+        );
+
+        t.start();
 
     }
 

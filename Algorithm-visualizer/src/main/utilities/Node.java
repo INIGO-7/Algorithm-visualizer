@@ -38,7 +38,7 @@ public class Node {
         this.isWall = false;                   //or the node being a wall.
         this.previous = null;                  //the node hasn't been visited, so it doesn't have a parent.
 
-        this.color = new Color(80, 80, 80);     //default color.
+        this.color = new Color(120, 120, 120);     //default color.
     }
 
     public ArrayList<Node> getUnvisitedNeighbours(Maze maze){

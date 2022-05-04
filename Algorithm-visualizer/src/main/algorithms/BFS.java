@@ -9,7 +9,7 @@ import java.util.Queue;
 
 public class BFS {
 
-    //breadh first search algorithm
+    //breadth first search algorithm
     //BFS explores equally in all directions.
 
     //This is an incredibly useful algorithm, not only for regular traversal,
@@ -20,19 +20,23 @@ public class BFS {
 
     private Node origin, destiny;
     private ArrayList<Node> exploredNodes = new ArrayList<Node>();
-    private Queue queue = new LinkedList<Node>();
+    private Queue toPaint, colors;
 
     public BFS(Maze maze, Node start, Node end)
     {
 
         this.origin = start;
         this.destiny = end;
+        toPaint = new LinkedList<Node>();
+        colors = new LinkedList<Color>();
 
         //initialise the Queue
         Queue queue = new LinkedList<Node>();
-        // Put the start node in the queue
+
+        // Put the start node in the queue and set it to already visited
         queue.add(start);
         start.setToVisited();
+
         // While there is node to be handled in the queue
         while (!queue.isEmpty())
         {
@@ -42,23 +46,56 @@ public class BFS {
             // Terminate if the goal is reached
             if (curNode == end) break;
 
+            ////  stuff for animations (ignore)  ///////////////////////////////////////////////////////////////////////////
+            if(curNode != start){
+                toPaint.add(curNode);
+                colors.add(new Color(138, 240, 137));
+            }
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
             // Handle neighbors
             ArrayList<Node> neighbours = curNode.getUnvisitedNeighbours(maze);
             for (int i = 0; i < neighbours.size(); ++i)
             {
-                if(neighbours.get(i) == null) continue;
 
-                neighbours.get(i).setToVisited();
-                neighbours.get(i).setPrevious(curNode);
-                queue.add(neighbours.get(i));
+                Node neighbour = neighbours.get(i);
+
+                ////  stuff for animations (ignore)  ///////////////////////////////////////////////////////////////////////////
+                if(neighbour != end){
+                    toPaint.add(neighbour);
+                    colors.add(new Color(41, 86, 97));
+                }
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                neighbour.setToVisited();
+                neighbour.setPrevious(curNode);
+                queue.add(neighbour);
             }
         }
         // Done ! At this point we just have to walk back from the end using the parent
         // If end does not have a parent, it means that it has not been found.
     }
 
+    public void visualizeAlgorithm(){
+        visualizeSearch();
+        visualizeShortestPath();
+    }
+
     public void visualizeSearch(){
 
+        long past = System.currentTimeMillis();
+        double diff = 20;                     //this will be updated 13.3 times per second
+        long current;
+
+        while(!(toPaint.isEmpty() && colors.isEmpty())){
+
+            current = System.currentTimeMillis();
+
+            if((current - past) / diff >= 1){
+                ((Node) toPaint.poll()).setColor((Color) colors.poll());
+                past = current;
+            }
+        }
 
     }
 
@@ -81,7 +118,7 @@ public class BFS {
             current = System.currentTimeMillis();
 
             if((current - past) / diff >= 1){
-                ((Node) path.poll()).setColor(Color.yellow);
+                ((Node) path.poll()).setColor(new Color(212, 212, 0));
                 past = current;
             }
         }
