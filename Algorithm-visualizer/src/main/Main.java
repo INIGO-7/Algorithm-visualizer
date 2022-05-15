@@ -42,9 +42,10 @@ public class Main implements Runnable{
 		mouseManager = new MouseManager();
 
 		window.getCanvas().addMouseListener(mouseManager);
+		window.getCanvas().addMouseMotionListener(mouseManager);
 
-		programState = new ProgramState(this);
-		State.setState(programState);
+		menuState = new MenuState(this);
+		State.setState(menuState);
 	}
 
 	@Override
@@ -103,6 +104,10 @@ public class Main implements Runnable{
 	}
 
 	public Thread getThread(){ return thread; }
+
+	public MouseManager getMouse(){
+		return mouseManager;
+	}
 
 	public synchronized void start() {
 
