@@ -3,10 +3,15 @@ package main.states;
 import main.Main;
 import main.Window;
 import main.algorithms.BFS;
+import main.utilities.Button;
 import main.utilities.Maze;
 import main.utilities.Node;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -17,7 +22,11 @@ public class ProgramState extends State{
     private Main main;
     private int gridWidth, gridHeight, gridStartX, gridStartY;
     private int rowNumber, colNumber;
+    private boolean isVisualizing = false;
     private Maze maze;
+    private BFS bfs;
+    private Button visualizeBFS;
+    private BufferedImage goBFS;
 
     public ProgramState(Main main) {
 
@@ -38,6 +47,12 @@ public class ProgramState extends State{
             maze.getNode(i, 27).setAsWall();
         }
 
+        try {
+            goBFS = ImageIO.read(new File("resources/goBFS.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         //origin and destiny points
 
         Node origin = maze.getNode(2, 25);
@@ -46,12 +61,20 @@ public class ProgramState extends State{
         origin.setColor(new Color(9, 110, 19));
         destination.setColor(new Color(6, 12, 128));
 
-        BFS bfs = new BFS(maze, origin, destination);
-        visualizeAlgorithm(bfs);
+
+        bfs = new BFS(maze, origin, destination);
+        visualizeBFS = new Button(gridHeight/2, 700, 150, 40, goBFS);
 
     }
 
-    public void tick(){}
+    public void tick(){
+
+        if(visualizeBFS.isClicked(main.getMouse())){
+            isVisualizing = true;
+            visualizeAlgorithm(bfs);
+        }
+
+    }
 
     public void render(Graphics g) {
 
@@ -61,7 +84,9 @@ public class ProgramState extends State{
             n.paint(g);
         }
 
-        //if(drawingMode == true)
+        g.drawImage(visualizeBFS.getButtonImage(), visualizeBFS.getX(), visualizeBFS.getY(), null);
+
+        if(!isVisualizing)
             drawGrid(g);
     }
 
@@ -91,6 +116,7 @@ public class ProgramState extends State{
 
             public void run(){
                 bfs.visualizeAlgorithm();
+                isVisualizing = false;
             }
 
         }
