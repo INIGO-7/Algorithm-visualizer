@@ -18,8 +18,9 @@ public class Node {
     //these are the real coordinates relative to the screen
     private int x, y;
 
-    //this will be the color and dimensions of the node for visualizations
+    //this will be the color, default color and dimensions of the node for visualizations
     private Color color;
+    public static final Color DEFAULT_COLOR = new Color(120, 120, 120);
     private int size;
 
     //this variable tells us if the node has already been examined.

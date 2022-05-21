@@ -52,4 +52,15 @@ public class Maze {
         return null;
     }
 
+    public void clear(){
+
+        for(Node n : nodes){
+            if(!(n.getRow() == 1 || n.getRow() == rows ||
+                    n.getCol() == 1 || n.getCol() == cols)){
+                n.setColor(Node.DEFAULT_COLOR);
+            }
+        }
+
+    }
+
 }
