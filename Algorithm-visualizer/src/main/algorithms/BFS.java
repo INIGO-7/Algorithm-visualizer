@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class BFS {
+public class BFS extends PathfindingAlgorithm{
 
     //breadth first search algorithm
     //BFS explores equally in all directions.
@@ -18,15 +18,9 @@ public class BFS {
     //This may be the algorithm of choice to identify nearby places of interest in GPS.
     //BFS guarantees the shortest path.
 
-    private Node origin, destiny;
-    private ArrayList<Node> exploredNodes = new ArrayList<Node>();
-    private Queue toPaint, colors;
-
     public BFS(Maze maze, Node start, Node end)
-    {
+    {   super(maze, start, end);
 
-        this.origin = start;
-        this.destiny = end;
         toPaint = new LinkedList<Node>();
         colors = new LinkedList<Color>();
 
@@ -74,63 +68,6 @@ public class BFS {
         }
         // Done ! At this point we just have to walk back from the end using the parent
         // If end does not have a parent, it means that it has not been found.
-    }
-
-    public void visualizeAlgorithm(){
-        visualizeSearch();
-        visualizeShortestPath();
-    }
-
-    public void visualizeSearch(){
-
-        long past = System.currentTimeMillis();
-        double diff = 20;                     //this will be updated 13.3 times per second
-        long current;
-
-        while(!(toPaint.isEmpty() && colors.isEmpty())){
-
-            current = System.currentTimeMillis();
-
-            if((current - past) / diff >= 1){
-                ((Node) toPaint.poll()).setColor((Color) colors.poll());
-                past = current;
-            }
-        }
-
-    }
-
-    public void visualizeShortestPath(){
-
-        Queue path = new LinkedList<Node>();
-        Node n = destiny.getPrevious();
-
-
-        while(n.getPrevious() != null){
-            path.add(n);
-            n = n.getPrevious();
-        }
-
-        long past = System.currentTimeMillis();
-        double diff = 75;                     //this will be updated 13.3 times per second
-        long current;
-
-        while(!path.isEmpty()){
-            current = System.currentTimeMillis();
-
-            if((current - past) / diff >= 1){
-                ((Node) path.poll()).setColor(new Color(212, 212, 0));
-                past = current;
-            }
-        }
-
-    }
-
-    public Node getOrigin(){
-        return origin;
-    }
-
-    public Node getDestiny(){
-        return destiny;
     }
 
 }

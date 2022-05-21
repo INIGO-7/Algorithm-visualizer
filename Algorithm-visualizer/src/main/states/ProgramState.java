@@ -48,8 +48,6 @@ public class ProgramState extends State{
             maze.getNode(i, 27).setAsWall();
         }
 
-
-
         //image load
 
         try {
