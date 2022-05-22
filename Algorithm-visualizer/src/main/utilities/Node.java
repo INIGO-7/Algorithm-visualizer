@@ -76,6 +76,15 @@ public class Node {
         this.isWall = true;
     }
 
+    public void reset(){
+
+        this.visited = false;
+        this.isWall = false;
+        this.previous = null;
+        this.color = Node.DEFAULT_COLOR;
+
+    }
+
     public void unsetAsWall(){
         this.isWall = false;
     }

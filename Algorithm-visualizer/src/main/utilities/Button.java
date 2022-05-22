@@ -10,6 +10,8 @@ public class Button {
     private int x, y, width, height;
     private BufferedImage buttonImage;
     private Rectangle buttonRect;
+    long current, past = System.currentTimeMillis();
+    double diff = 500;                     //we want the user to be able to click the button 2 times per second
 
     public Button(int x, int y, int width, int height, BufferedImage img){
         this.x = x;
@@ -21,7 +23,17 @@ public class Button {
     }
 
     public boolean isClicked(MouseManager mouse){
-        return buttonRect.contains(mouse.getMouseX(), mouse.getMouseY()) && mouse.getLeftClick();
+
+        current = System.currentTimeMillis();
+
+        if(buttonRect.contains(mouse.getMouseX(), mouse.getMouseY()) && mouse.getLeftClick() && (current - past) / diff >= 1){
+            past = current;
+            return true;
+        }else{
+            return false;
+        }
+
+
     }
 
     public BufferedImage getButtonImage(){

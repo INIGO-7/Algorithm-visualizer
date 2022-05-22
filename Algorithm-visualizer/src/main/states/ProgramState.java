@@ -3,6 +3,7 @@ package main.states;
 import main.Main;
 import main.Window;
 import main.algorithms.BFS;
+import main.algorithms.PathfindingAlgorithm;
 import main.utilities.Button;
 import main.utilities.Maze;
 import main.utilities.Node;
@@ -24,10 +25,15 @@ public class ProgramState extends State{
     private int rowNumber, colNumber;
     private boolean isVisualizing = false;
     private Maze maze;
-    private BFS bfs;
+    private PathfindingAlgorithm algorithm;
     private Button generateMaze, paintMaze, BFS, DFS, aStar, dijkstra, visualize, clear;
     private BufferedImage title_img, generateMaze_img, paintMaze_img, BFS_img, DFS_img, aStar_img, dijkstra_img, visualize_img, clear_img;
     private int generateMaze_height, paintMaze_height, algorithms_height_row1, algorithms_height_row2, visualize_height, clear_height;
+
+    //variables for testing
+
+    Node origin;
+    Node destination;
 
     public ProgramState(Main main) {
 
@@ -47,6 +53,15 @@ public class ProgramState extends State{
         for(int i = 1; i <= 6; i++){
             maze.getNode(i, 27).setAsWall();
         }
+
+        //testing variables initialization
+
+        origin = maze.getNode(2, 25);
+        destination = maze.getNode(4, 30);
+
+        origin.setColor(new Color(9, 110, 19));
+        destination.setColor(new Color(6, 12, 128));
+
 
         //image load
 
@@ -104,14 +119,6 @@ public class ProgramState extends State{
             e.printStackTrace();
         }
 
-        //origin and destiny points
-
-        Node origin = maze.getNode(2, 25);
-        Node destination = maze.getNode(4, 30);
-
-        origin.setColor(new Color(9, 110, 19));
-        destination.setColor(new Color(6, 12, 128));
-
         //button initialization
 
 
@@ -154,24 +161,38 @@ public class ProgramState extends State{
 
         //TODO algorithm initialization ???? should we do it here ????
 
-        bfs = new BFS(maze, origin, destination);
-
     }
 
     public void tick(){
 
         //here we handle the buttons
-        //TODO we suspect that when the user clicks a button it registers multiple clicks instead of one
 
         if(visualize.isClicked(main.getMouse())){
             isVisualizing = true;
-            visualizeAlgorithm(bfs);
+            visualizeAlgorithm(algorithm);
         }
 
         if(clear.isClicked(main.getMouse())){
             clearMaze();
         }
 
+        if(BFS.isClicked(main.getMouse())){
+            algorithm = new BFS(maze, origin, destination);
+        }
+
+        /*
+        if(DFS.isClicked(main.getMouse())){
+            algorithm = new DFS(maze, origin, destination);
+        }
+
+        if(aStar.isClicked(main.getMouse())){
+            algorithm = new aStar(maze, origin, destination);
+        }
+
+        if(Dijkstra.isClicked(main.getMouse())){
+            algorithm = new Dijkstra(maze, origin, destination);
+        }
+        */
     }
 
     public void render(Graphics g) {
@@ -236,12 +257,12 @@ public class ProgramState extends State{
 
     }
 
-    public void visualizeAlgorithm(BFS bfs){
+    public void visualizeAlgorithm(PathfindingAlgorithm algorithm){
 
         Thread t = new Thread( new Runnable(){
 
             public void run(){
-                bfs.visualizeAlgorithm();
+                algorithm.visualizeAlgorithm();
                 isVisualizing = false;
             }
 
@@ -252,12 +273,12 @@ public class ProgramState extends State{
 
     }
 
-    public void visualizeSearch(BFS bfs){
+    public void visualizeSearch(PathfindingAlgorithm algorithm){
 
         Thread t = new Thread( new Runnable(){
 
             public void run(){
-                bfs.visualizeSearch();
+                algorithm.visualizeSearch();
             }
 
         }
@@ -267,12 +288,12 @@ public class ProgramState extends State{
 
     }
 
-    public void visualizeSortestPath(BFS bfs){
+    public void visualizeSortestPath(PathfindingAlgorithm algorithm){
 
         Thread t = new Thread( new Runnable(){
 
             public void run(){
-                bfs.visualizeShortestPath();
+                algorithm.visualizeShortestPath();
             }
 
         }
