@@ -28,7 +28,7 @@ public abstract class PathfindingAlgorithm {
     public void visualizeSearch(){
 
         long past = System.currentTimeMillis();
-        double diff = 20;                     //this will be updated 13.3 times per second
+        double diff = 10;                     //this will be updated 100 times per second
         long current;
 
         while(!(toPaint.isEmpty() && colors.isEmpty())){
@@ -55,7 +55,7 @@ public abstract class PathfindingAlgorithm {
         }
 
         long past = System.currentTimeMillis();
-        double diff = 75;                     //this will be updated 13.3 times per second
+        double diff = 40;                     //this will be updated 25 times per second
         long current;
 
         while(!path.isEmpty()){

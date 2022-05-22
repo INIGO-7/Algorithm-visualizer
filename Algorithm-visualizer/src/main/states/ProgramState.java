@@ -23,7 +23,6 @@ public class ProgramState extends State{
     private Main main;
     private int gridWidth, gridHeight, gridStartX, gridStartY;
     private int rowNumber, colNumber;
-    private boolean isVisualizing = false;
     private Maze maze;
     private PathfindingAlgorithm algorithm;
     private Button generateMaze, paintMaze, BFS, DFS, aStar, dijkstra, visualize, clear;
@@ -40,28 +39,12 @@ public class ProgramState extends State{
         this.main = main;
         this.window = main.getWindow();
 
-        gridWidth = 800;
-        gridHeight = 600;
-        rowNumber = 24;
-        colNumber = 32;
+        rowNumber = 25;
+        colNumber = 33;
+        gridWidth = colNumber * Node.NODE_SIZE;
+        gridHeight = rowNumber * Node.NODE_SIZE;
 
-        gridStartX = window.getCanvas().getWidth()/2 - gridWidth/2 - 200;
-        gridStartY = window.getCanvas().getHeight()/2 - gridHeight/2;
-
-        maze = new Maze(rowNumber, colNumber, gridStartX, gridStartY);
-
-        for(int i = 1; i <= 6; i++){
-            maze.getNode(i, 27).setAsWall();
-        }
-
-        //testing variables initialization
-
-        origin = maze.getNode(2, 25);
-        destination = maze.getNode(4, 30);
-
-        origin.setColor(new Color(9, 110, 19));
-        destination.setColor(new Color(6, 12, 128));
-
+        maze = new Maze(rowNumber, colNumber);
 
         //image load
 
@@ -126,12 +109,12 @@ public class ProgramState extends State{
         //            y -> 30 + title_img.getHeight() + 30 + 25 (this is: margin + title's height + margin + separating bar's width)
 
 
-        generateMaze_height = 30 + title_img.getHeight() + 30 + 25 + 30;
+        generateMaze_height = 30 + title_img.getHeight() + 30 + 25 + 50;
         paintMaze_height = generateMaze_height + generateMaze_img.getHeight() + 30;
-        algorithms_height_row1 = paintMaze_height + paintMaze_img.getHeight() + 30 + 25 + 30;
-        algorithms_height_row2 = algorithms_height_row1 + DFS_img.getHeight() + 30;
+        algorithms_height_row1 = paintMaze_height + paintMaze_img.getHeight() + 30 + 25 + 50;
+        algorithms_height_row2 = algorithms_height_row1 + DFS_img.getHeight() + 10;
         visualize_height = algorithms_height_row2 + BFS_img.getHeight() + 30 + 25 + 30;
-        clear_height = visualize_height + visualize_img.getHeight() + 30;
+        clear_height = visualize_height + visualize_img.getHeight() + 20;
 
 
         generateMaze = new Button(main.getWindow().getCanvas().getWidth() - 400 + 400/2 - generateMaze_img.getWidth()/2,
@@ -167,8 +150,11 @@ public class ProgramState extends State{
 
         //here we handle the buttons
 
+        if(generateMaze.isClicked(main.getMouse())){
+            maze.generate();
+        }
+
         if(visualize.isClicked(main.getMouse())){
-            isVisualizing = true;
             visualizeAlgorithm(algorithm);
         }
 
@@ -177,7 +163,7 @@ public class ProgramState extends State{
         }
 
         if(BFS.isClicked(main.getMouse())){
-            algorithm = new BFS(maze, origin, destination);
+            algorithm = new BFS(maze, maze.getOrigin(), maze.getDestiny());
         }
 
         /*
@@ -230,8 +216,8 @@ public class ProgramState extends State{
             n.paint(g);
         }
 
-        if(!isVisualizing)
-            drawGrid(g);
+        //if(isPainting())
+        //  drawGrid(g);
 
 
 
@@ -243,16 +229,19 @@ public class ProgramState extends State{
 
         g.setColor(new Color(160, 160, 160));
 
+        int startX = maze.getStartX();
+        int startY = maze.getStartY();
+
         // X axis
 
-        for(int x = gridStartX; x <= gridStartX + gridWidth; x += 25){
-            g.drawLine(x, gridStartY, x, gridStartY + gridHeight);
+        for(int x = startX; x <= startX + gridWidth; x += 25){
+            g.drawLine(x, startY, x, startY + gridHeight);
         }
 
         // Y axis
 
-        for(int y = gridStartY; y <= gridStartY + gridHeight; y+=25){
-            g.drawLine(gridStartX, y, gridStartX + gridWidth, y);
+        for(int y = startY; y <= startY + gridHeight; y+=25){
+            g.drawLine(startX, y, startX + gridWidth, y);
         }
 
     }
@@ -263,7 +252,6 @@ public class ProgramState extends State{
 
             public void run(){
                 algorithm.visualizeAlgorithm();
-                isVisualizing = false;
             }
 
         }

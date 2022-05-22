@@ -18,10 +18,18 @@ public class Node {
     //these are the real coordinates relative to the screen
     private int x, y;
 
-    //this will be the color, default color and dimensions of the node for visualizations
-    private Color color;
+    //these will be the dimensions and the possible colors of the node for visualizations
+
+    public static final int NODE_SIZE = 25;       //as each node is represented as a square, we set the size of each side
+                                                  //to 25 pixels
+
+    //node possible colors
     public static final Color DEFAULT_COLOR = new Color(120, 120, 120);
-    private int size;
+    public static final Color ORIGIN_COLOR = new Color(9, 110, 19);
+    public static final Color DESTINY_COLOR = new Color(6, 12, 128);
+    public static final Color WALL_COLOR = Color.BLACK;
+
+    private Color color = DEFAULT_COLOR;
 
     //this variable tells us if the node has already been examined.
     private boolean visited;
@@ -32,14 +40,10 @@ public class Node {
         this.column = column;
         this.x = x;
         this.y = y;
-        this.size = 25;                        //as each node is represented as a square, we set the size of each side
-                                               //to 25 pixels.
 
         this.visited = false;                  //at the beginning it's impossible that the node has already been visited
         this.isWall = false;                   //or the node being a wall.
         this.previous = null;                  //the node hasn't been visited, so it doesn't have a parent.
-
-        this.color = new Color(120, 120, 120);     //default color.
     }
 
     public ArrayList<Node> getUnvisitedNeighbours(Maze maze){
@@ -64,7 +68,7 @@ public class Node {
 
     public void paint(Graphics g){
         g.setColor(color);
-        g.fillRect(x, y, size, size);   //the node is painted in x and y coordinates, with a size of 25 height x 25width
+        g.fillRect(x, y, Node.NODE_SIZE, Node.NODE_SIZE);   //the node is painted in x and y coordinates, with a size of 25 height x 25width
     }
 
     public void setColor(Color c){
@@ -72,8 +76,13 @@ public class Node {
     }
 
     public void setAsWall(){
-        color = Color.BLACK;
+        color = Node.WALL_COLOR;
         this.isWall = true;
+    }
+
+    public void unsetAsWall(){
+        color = Node.DEFAULT_COLOR;
+        this.isWall = false;
     }
 
     public void reset(){
@@ -83,10 +92,6 @@ public class Node {
         this.previous = null;
         this.color = Node.DEFAULT_COLOR;
 
-    }
-
-    public void unsetAsWall(){
-        this.isWall = false;
     }
 
     public void setToVisited(){
