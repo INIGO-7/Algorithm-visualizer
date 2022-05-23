@@ -85,13 +85,19 @@ public class Node {
         this.isWall = false;
     }
 
-    public void reset(){
+    public void setToDefault(){
 
         this.visited = false;
         this.isWall = false;
         this.previous = null;
         this.color = Node.DEFAULT_COLOR;
 
+    }
+
+    public boolean isDefault(){
+        if(!visited && !isWall && previous == null && color == DEFAULT_COLOR){
+            return true;
+        } else return false;
     }
 
     public void setToVisited(){
@@ -101,6 +107,7 @@ public class Node {
     public void setToUnvisited(){
         this.visited = false;
     }
+
     public void setPrevious(Node n){
         this.previous = n;
     }
@@ -112,6 +119,10 @@ public class Node {
     public int getCol(){
         return column;
     }
+
+    public int getX(){ return x; }
+
+    public int getY(){ return y; }
 
     public Node getPrevious(){
         return previous;

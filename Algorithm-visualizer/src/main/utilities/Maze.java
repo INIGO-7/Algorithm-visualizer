@@ -180,7 +180,7 @@ public class Maze {
         for(Node n : nodes){
             if(!(n.getRow() == 1 || n.getRow() == rows ||
                     n.getCol() == 1 || n.getCol() == cols)){
-                n.reset();
+                n.setToDefault();
             }
         }
 
@@ -202,6 +202,14 @@ public class Maze {
 
     public Node getDestiny(){
         return destiny;
+    }
+
+    public void setOrigin(Node origin){
+        this.origin = origin;
+    }
+
+    public void setDestiny(Node destiny){
+        this.destiny = destiny;
     }
 
     public int getStartX(){

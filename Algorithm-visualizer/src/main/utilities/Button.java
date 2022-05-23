@@ -10,6 +10,7 @@ public class Button {
     private int x, y, width, height;
     private BufferedImage buttonImage;
     private Rectangle buttonRect;
+    private boolean isOn;
     long current, past = System.currentTimeMillis();
     double diff = 500;                     //we want the user to be able to click the button 2 times per second
 
@@ -18,6 +19,7 @@ public class Button {
         this.y = y;
         this.width = width;
         this.height = height;
+        this.isOn = false;          //by default the button is off
         this.buttonImage = img;
         this.buttonRect = new Rectangle(x , y, width, height);
     }
@@ -27,6 +29,8 @@ public class Button {
         current = System.currentTimeMillis();
 
         if(buttonRect.contains(mouse.getMouseX(), mouse.getMouseY()) && mouse.getLeftClick() && (current - past) / diff >= 1){
+
+            isOn = !isOn;   //we invert the state of isOn
             past = current;
             return true;
         }else{
@@ -58,5 +62,17 @@ public class Button {
 
     public int getWidth() {
         return width;
+    }
+
+    public void setOn(){
+        isOn = true;
+    }
+
+    public void setOff(){
+        isOn = false;
+    }
+
+    public boolean isOn(){
+        return isOn;
     }
 }
