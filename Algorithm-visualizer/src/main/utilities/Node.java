@@ -15,8 +15,13 @@ public class Node {
     //row and column of the Node relative to the grid
     private int row, column;
 
+    private long rootDistance, destinyDistance;
+
     //these are the real coordinates relative to the screen
     private int x, y;
+
+    //this is the cost of the node for the A* algorithm
+    private int f_cost;
 
     //these will be the dimensions and the possible colors of the node for visualizations
 
@@ -124,6 +129,18 @@ public class Node {
 
     public int getY(){ return y; }
 
+    public long getDestinyDistance(){ return destinyDistance; }
+
+    public void setDestinyDistance(long destinyDistance){ this.destinyDistance = destinyDistance; }
+
+    public long getRootDistance(){ return rootDistance; }
+
+    public void setRootDistance(long rootDistance){ this.rootDistance = rootDistance; }
+
+    public int getFCost(){ return f_cost; }
+
+    public void setFCost(int f_cost){ this.f_cost = f_cost; }
+
     public Node getPrevious(){
         return previous;
     }
@@ -135,5 +152,7 @@ public class Node {
     public boolean isVisited(){
         return visited;
     }
+
+    public Color getColor(){ return color; }
 
 }

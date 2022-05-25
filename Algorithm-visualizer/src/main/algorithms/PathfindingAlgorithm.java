@@ -21,8 +21,12 @@ public abstract class PathfindingAlgorithm {
     }
 
     public void visualizeAlgorithm(){
-        visualizeSearch();
-        visualizeShortestPath();
+        if(destiny.getPrevious() != null){
+            visualizeSearch();
+            visualizeShortestPath();
+        }else{
+            System.out.println("The destiny node is unreachable.");
+        }
     }
 
     public void visualizeSearch(){
@@ -73,8 +77,18 @@ public abstract class PathfindingAlgorithm {
         return origin;
     }
 
+    public void setOrigin(Node origin){
+        this.origin = origin;
+    }
+
     public Node getDestiny(){
         return destiny;
     }
+
+    public void setDestiny(Node destiny){
+        this.destiny = destiny;
+    }
+
+    public void setMaze(Maze m){ this.maze = m;}
 
 }

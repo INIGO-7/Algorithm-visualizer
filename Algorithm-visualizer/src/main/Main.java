@@ -3,6 +3,7 @@ package main;
 import main.states.ProgramState;
 import main.states.MenuState;
 import main.states.State;
+import main.utilities.Assets;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -13,6 +14,9 @@ public class Main implements Runnable{
 	private Window window;
 	private int width, height;
 	private String title;
+
+	//Assets (pictures)
+	private final Assets assets = new Assets();
 
 	//Loop and threading data
 	long past, current;
@@ -38,6 +42,7 @@ public class Main implements Runnable{
 		this.title = title;
 
 		window = new Window(width, height, title);
+
 
 		mouseManager = new MouseManager();
 

@@ -8,19 +8,20 @@ import java.awt.image.BufferedImage;
 public class Button {
 
     private int x, y, width, height;
-    private BufferedImage buttonImage;
+    private BufferedImage buttonImage1, buttonImage2;
     private Rectangle buttonRect;
     private boolean isOn;
     long current, past = System.currentTimeMillis();
     double diff = 500;                     //we want the user to be able to click the button 2 times per second
 
-    public Button(int x, int y, int width, int height, BufferedImage img){
+    public Button(int x, int y, int width, int height, BufferedImage img1, BufferedImage img2){
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.isOn = false;          //by default the button is off
-        this.buttonImage = img;
+        this.buttonImage1 = img1;
+        this.buttonImage2 = img2;
         this.buttonRect = new Rectangle(x , y, width, height);
     }
 
@@ -41,7 +42,10 @@ public class Button {
     }
 
     public BufferedImage getButtonImage(){
-        return buttonImage;
+        if(isOn){
+            return buttonImage1;
+        }
+        return buttonImage2;
     }
 
     public Rectangle getRectangle(){
@@ -75,4 +79,5 @@ public class Button {
     public boolean isOn(){
         return isOn;
     }
+
 }

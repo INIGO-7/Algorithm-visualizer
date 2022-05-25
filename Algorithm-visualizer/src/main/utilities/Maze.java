@@ -186,6 +186,15 @@ public class Maze {
 
     }
 
+    public void clearVisualization(){
+
+        for(Node n : nodes){
+            if(!n.isWall() && n.getColor() != Node.ORIGIN_COLOR && n.getColor() != Node.DESTINY_COLOR)
+                n.setToDefault();
+        }
+
+    }
+
     public void setWalls(){
         for(Node n : nodes){
             if(n.getRow() == 1 || n.getRow() == rows ||

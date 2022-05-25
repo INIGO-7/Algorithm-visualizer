@@ -7,11 +7,13 @@ import java.io.File;
 import java.io.IOException;
 
 import main.Main;
+import main.utilities.Assets;
 import main.utilities.Button;
 
 public class MenuState extends State{
 
-    private BufferedImage goButton, title;
+    private final BufferedImage goButton_img = Assets.goButton_img, mainTitle_img = Assets.mainTitle_img,
+                    maze1_img = Assets.maze1_img, maze2_img = Assets.maze2_img;
     private Button go;
     private Main main;
 
@@ -19,21 +21,9 @@ public class MenuState extends State{
 
         this.main = main;
 
-        try {
-            title = ImageIO.read(new File("resources/menuTitle.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            goButton = ImageIO.read(new File("resources/goProgramState.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        go = new Button(main.getWindow().getCanvas().getWidth()/2 - goButton.getWidth()/2,
-                main.getWindow().getCanvas().getHeight()/2 - goButton.getHeight()/2 + 100,
-                goButton.getWidth(), goButton.getHeight(), goButton);
+        go = new Button(main.getWindow().getCanvas().getWidth()/2 - goButton_img.getWidth()/2,
+                main.getWindow().getCanvas().getHeight()/2 - goButton_img.getHeight()/2 + 100,
+                goButton_img.getWidth(), goButton_img.getHeight(), goButton_img, goButton_img);
     }
 
     public void tick(){
@@ -46,9 +36,15 @@ public class MenuState extends State{
 
     public void render(Graphics g){
 
-        g.drawImage(title, main.getWindow().getCanvas().getWidth()/2 - title.getWidth()/2, 50, null);
+        g.drawImage(mainTitle_img, main.getWindow().getCanvas().getWidth()/2 - mainTitle_img.getWidth()/2, 50, null);
 
         g.drawImage(go.getButtonImage(), go.getX(), go.getY(), null);
+
+        g.drawImage(maze1_img, main.getWindow().getCanvas().getWidth()/2 - main.getWindow().getCanvas().getWidth()/4 - maze1_img.getWidth()/2 - 50,
+                main.getWindow().getCanvas().getHeight()/2, null);
+
+        g.drawImage(maze2_img, main.getWindow().getCanvas().getWidth()/2 + main.getWindow().getCanvas().getWidth()/4 - maze1_img.getWidth()/2 + 50,
+                main.getWindow().getCanvas().getHeight()/2, null);
     }
 
 }
