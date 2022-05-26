@@ -108,7 +108,6 @@ public class Node {
 
     @Override
     public boolean equals(Object obj){
-        System.out.println("trururue");
         if(this == obj) return true;
         if(obj == null) return false;
         if(obj instanceof Node){

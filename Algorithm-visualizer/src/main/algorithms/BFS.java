@@ -34,10 +34,8 @@ public class BFS extends PathfindingAlgorithm{
             // Handle the node in the front of the line
             Node curNode = (Node) queue.poll();
             // Terminate if the goal is reached
-            if (curNode.equals(destiny)){
-                System.out.println("nowojnwonwonwonwonwownownow");
-                break;
-            }
+
+            if (curNode.equals(destiny)) break;
 
             ////  stuff for animations (ignore)  ///////////////////////////////////////////////////////////////////////////
             if(curNode != origin){
@@ -48,10 +46,8 @@ public class BFS extends PathfindingAlgorithm{
 
             // Handle neighbors
             ArrayList<Node> neighbours = curNode.getUnvisitedNeighbours(this.maze);
-            for (int i = 0; i < neighbours.size(); ++i)
+            for (Node neighbour : neighbours)
             {
-
-                Node neighbour = neighbours.get(i);
 
                 ////  stuff for animations (ignore)  ///////////////////////////////////////////////////////////////////////////
                 if(neighbour != destiny){

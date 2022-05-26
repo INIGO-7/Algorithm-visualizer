@@ -205,7 +205,6 @@ public class ProgramState extends State{
 
         if(BFS.isClicked(main.getMouse())){
             turnOffOtherButtons(BFS);
-            System.out.println(maze.getOrigin().getRow() + ", " + maze.getOrigin().getCol() + " ; " + maze.getDestiny().getRow() + " " + maze.getDestiny().getCol());
             algorithm = new BFS(maze, maze.getOrigin(), maze.getDestiny());
         }
 

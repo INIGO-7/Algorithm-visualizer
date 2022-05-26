@@ -189,7 +189,10 @@ public class Maze {
     public void clearVisualization(){
 
         for(Node n : nodes){
-            if(!n.isWall() && n.getColor() != Node.ORIGIN_COLOR && n.getColor() != Node.DESTINY_COLOR)
+            if(n.getColor() == Node.ORIGIN_COLOR || n.getColor() == Node.DESTINY_COLOR) {
+                n.setToUnvisited();
+                n.setPrevious(null);
+            }else if(!n.isWall())
                 n.setToDefault();
         }
 
