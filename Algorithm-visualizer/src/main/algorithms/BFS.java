@@ -21,41 +21,40 @@ public class BFS extends PathfindingAlgorithm{
     public BFS(Maze maze, Node start, Node end)
     {   super(maze, start, end);
 
-        toPaint = new LinkedList<Node>();
-        colors = new LinkedList<Color>();
-
         //initialise the Queue
         Queue queue = new LinkedList<Node>();
 
         // Put the start node in the queue and set it to already visited
-        queue.add(start);
-        start.setToVisited();
+        queue.add(origin);
+        origin.setToVisited();
 
         // While there is node to be handled in the queue
         while (!queue.isEmpty())
         {
             // Handle the node in the front of the line
             Node curNode = (Node) queue.poll();
-
             // Terminate if the goal is reached
-            if (curNode == end) break;
+            if (curNode.equals(destiny)){
+                System.out.println("nowojnwonwonwonwonwownownow");
+                break;
+            }
 
             ////  stuff for animations (ignore)  ///////////////////////////////////////////////////////////////////////////
-            if(curNode != start){
+            if(curNode != origin){
                 toPaint.add(curNode);
                 colors.add(new Color(138, 240, 137));
             }
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             // Handle neighbors
-            ArrayList<Node> neighbours = curNode.getUnvisitedNeighbours(maze);
+            ArrayList<Node> neighbours = curNode.getUnvisitedNeighbours(this.maze);
             for (int i = 0; i < neighbours.size(); ++i)
             {
 
                 Node neighbour = neighbours.get(i);
 
                 ////  stuff for animations (ignore)  ///////////////////////////////////////////////////////////////////////////
-                if(neighbour != end){
+                if(neighbour != destiny){
                     toPaint.add(neighbour);
                     colors.add(new Color(41, 86, 97));
                 }

@@ -11,13 +11,16 @@ import java.util.Queue;
 public abstract class PathfindingAlgorithm {
 
     protected Node origin, destiny;
-    protected ArrayList<Node> exploredNodes = new ArrayList<Node>();
     protected Queue toPaint, colors;
     protected Maze maze;
 
     public PathfindingAlgorithm(Maze maze, Node start, Node end){
         this.origin = start;
         this.destiny = end;
+        this.maze = maze;
+
+        toPaint = new LinkedList<Node>();
+        colors = new LinkedList<Color>();
     }
 
     public void visualizeAlgorithm(){

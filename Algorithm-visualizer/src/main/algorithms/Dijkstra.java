@@ -13,28 +13,25 @@ public class Dijkstra extends PathfindingAlgorithm{
     public Dijkstra(Maze maze, Node start, Node end)
     {   super(maze, start, end);
 
-        toPaint = new LinkedList<Node>();
-        colors = new LinkedList<Color>();
-
         Queue queue = new LinkedList<Node>();
 
         // Init all distances with infinity
         for (Node node : maze.getNodes()) node.setRootDistance(999999999);
 
         // Distance to the root itself is zero
-        start.setRootDistance(0);
+        origin.setRootDistance(0);
 
         // Init queue with the root node
-        queue.add(start);
+        queue.add(origin);
 
         // Iterate over the queue until it is empty.
         while (!queue.isEmpty()) {
             curNode = (Node) queue.remove();  // Fetch next closest node
             curNode.setToVisited();  // Mark as discovered
 
-            if(curNode == destiny) break;
+            if (curNode.equals(destiny)) break;
 
-            if(curNode != start && curNode != destiny) {
+            if(curNode != origin && curNode != destiny) {
                 toPaint.add(curNode);
                 colors.add(new Color(138, 240, 137));
             }

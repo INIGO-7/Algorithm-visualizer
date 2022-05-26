@@ -15,20 +15,16 @@ public class DFS extends PathfindingAlgorithm{
     public DFS(Maze maze, Node start, Node end) {
         super(maze, start, end);
 
-        toPaint = new LinkedList<Node>();
-        colors = new LinkedList<Color>();
-
         Stack pila = new Stack();
-        start.setToVisited();
-        pila.push(start);
+        origin.setToVisited();
+        pila.push(origin);
 
         while (!pila.empty()) {
             Node curNode = (Node) pila.pop();
-            if (curNode == end) {
-                break;
-            }
 
-            if (curNode != start) {
+            if (curNode.equals(destiny)) break;
+
+            if (curNode != origin) {
                 toPaint.add(curNode);
                 colors.add(new Color(138, 240, 137));
             }
@@ -40,7 +36,7 @@ public class DFS extends PathfindingAlgorithm{
                 neighbour.setPrevious(curNode);
                 pila.push(neighbour);
 
-                if (neighbour != end) {
+                if (neighbour != destiny) {
                     toPaint.add(neighbour);
                     colors.add(new Color(41, 86, 97));
                 }

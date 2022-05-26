@@ -3,6 +3,7 @@ package main.utilities;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class Node {
 
@@ -103,6 +104,47 @@ public class Node {
         if(!visited && !isWall && previous == null && color == DEFAULT_COLOR){
             return true;
         } else return false;
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        System.out.println("trururue");
+        if(this == obj) return true;
+        if(obj == null) return false;
+        if(obj instanceof Node){
+            Node node = (Node) obj;
+            if(node.getRow() == this.getRow() && node.getCol() == this.getCol()) {
+
+                return true;
+
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode(){
+        int hash = 7; //we start with a prime non 0 number
+
+        //always multiply by another prime non 0 number
+        hash = 31 * hash + (isWall ? 0 : 1);
+        hash = 31 * hash + (visited ? 0 : 1);
+        hash = 31 * hash + row;
+        hash = 31 * hash + column;
+        hash = 31 * hash + x;
+        hash = 31 * hash + y;
+        hash = 31 * hash + f_cost;
+        hash = 31 * hash + (int) (this.rootDistance ^ (this.rootDistance >>> 32));
+        hash = 31 * hash + (int) (this.destinyDistance ^ (this.destinyDistance >>> 32));
+        hash = 31 * hash + NODE_SIZE;
+        hash = 31 * hash + Objects.hashCode(DEFAULT_COLOR);
+        hash = 31 * hash + Objects.hashCode(ORIGIN_COLOR);
+        hash = 31 * hash + Objects.hashCode(DESTINY_COLOR);
+        hash = 31 * hash + Objects.hashCode(WALL_COLOR);
+        hash = 31 * hash + Objects.hashCode(color);
+        hash = 31 * hash + Objects.hashCode(previous);
+
+        return hash;
     }
 
     public void setToVisited(){

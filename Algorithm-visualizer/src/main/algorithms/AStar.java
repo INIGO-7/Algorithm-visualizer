@@ -43,16 +43,13 @@ public class AStar extends PathfindingAlgorithm{
     public AStar(Maze maze, Node start, Node end)
     {   super(maze, start, end);
 
-        toPaint = new LinkedList<Node>();
-        colors = new LinkedList<Color>();
-
         // Distance to the root itself is zero
-        start.setRootDistance(0);
-        start.setDestinyDistance(Math.abs(start.getRow() - destiny.getRow()) + Math.abs(start.getCol() - destiny.getCol()));
-        start.setFCost((int) (start.getRootDistance() + start.getDestinyDistance()));
+        origin.setRootDistance(0);
+        origin.setDestinyDistance(Math.abs(origin.getRow() - destiny.getRow()) + Math.abs(origin.getCol() - destiny.getCol()));
+        origin.setFCost((int) (origin.getRootDistance() + origin.getDestinyDistance()));
 
         // Init queue with the root node
-        OPEN.add(start);
+        OPEN.add(origin);
 
         // Iterate over the priority queue until it is empty.
         while (!OPEN.isEmpty()) {
@@ -62,9 +59,9 @@ public class AStar extends PathfindingAlgorithm{
             CLOSED.add(curNode);
             curNode.setToVisited();  // Mark as discovered
 
-            if (curNode == end) break;
+            if (curNode.equals(destiny)) break;
 
-            if(curNode != start && curNode != destiny) {
+            if(curNode != origin && curNode != destiny) {
                 toPaint.add(curNode);
                 colors.add(new Color(138, 240, 137));
             }

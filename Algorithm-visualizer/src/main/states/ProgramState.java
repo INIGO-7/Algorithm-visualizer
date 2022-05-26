@@ -128,12 +128,9 @@ public class ProgramState extends State{
         if(!isPaintModeOn){
 
             if(generateMaze.isClicked(main.getMouse())){
+
                 maze.generate();
-                if(algorithm != null){
-                    algorithm.setOrigin(maze.getOrigin());
-                    algorithm.setDestiny(maze.getDestiny());
-                    algorithm.setMaze(maze);
-                }
+                turnOffAlgorithmButtons();
             }
 
             if(paintMaze.isClicked(main.getMouse())){
@@ -208,6 +205,7 @@ public class ProgramState extends State{
 
         if(BFS.isClicked(main.getMouse())){
             turnOffOtherButtons(BFS);
+            System.out.println(maze.getOrigin().getRow() + ", " + maze.getOrigin().getCol() + " ; " + maze.getDestiny().getRow() + " " + maze.getDestiny().getCol());
             algorithm = new BFS(maze, maze.getOrigin(), maze.getDestiny());
         }
 
@@ -228,10 +226,11 @@ public class ProgramState extends State{
         }
 
         if(visualize.isClicked(main.getMouse())){
-            if(algorithm != null && maze.getDestiny() != null || maze.getOrigin() != null){
+            if(algorithm != null && maze.getDestiny() != null && maze.getOrigin() != null){
                 isVisualizing = true;
                 visualizeAlgorithm(algorithm);
             }
+            turnOffAlgorithmButtons();
         }
 
         if(clear.isClicked(main.getMouse())){
@@ -393,9 +392,7 @@ public class ProgramState extends State{
     }
 
     public void clearMaze(){
-        for(Button b : pathfindingAlgorithm_buttons){
-            b.setOff();
-        }
+        turnOffAlgorithmButtons();
         maze.setOrigin(null);
         maze.setDestiny(null);
         algorithm = null;
